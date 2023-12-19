@@ -1,5 +1,4 @@
-﻿open Microsoft.Extensions.Configuration
-open Giraffe
+﻿open Giraffe
 open Microsoft.AspNetCore.Builder
 
 let b = WebApplication.CreateBuilder()
