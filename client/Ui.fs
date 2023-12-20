@@ -33,7 +33,7 @@ let MyComponent model dispatch =
 
     JSX.jsx
         $"""
-    <button onClick={fun _ -> dispatch GetData}>
+    <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow m-5" onClick={fun _ -> dispatch GetData}>
         Fetch Data!
     </button>
 """
