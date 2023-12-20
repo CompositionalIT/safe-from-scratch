@@ -2,10 +2,8 @@ module Ui
 
 open Browser.Dom
 open Feliz
-open Fable.Core
 open Fable.Remoting.Client
 open Elmish
-open Feliz.JSX.React
 
 type Model = string option
 
@@ -25,18 +23,14 @@ let update msg model =
     | GetData -> None, Cmd.OfAsync.perform api.Greet () GotData
     | GotData data -> Some data, Cmd.none
 
-[<JSX.Component>]
-let MyComponent model dispatch =
+let view model dispatch =
     match model with
     | Some model -> window.alert model
     | None -> ()
 
-    JSX.jsx
-        $"""
-    <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow m-5" onClick={fun _ -> dispatch GetData}>
-        Fetch Data!
-    </button>
-"""
-    |> toReact
-
-let view model dispatch = MyComponent model dispatch
+    Html.button [
+        prop.className
+            "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow m-5"
+        prop.onClick (fun _ -> dispatch GetData)
+        prop.children [ Html.text "Get Data" ]
+    ]
