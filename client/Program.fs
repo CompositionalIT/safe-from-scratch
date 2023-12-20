@@ -1,7 +1,17 @@
-﻿open Feliz
-open Browser
-open Feliz.JSX.React
+﻿open Elmish
+open Elmish.React
 
-let private root = document.getElementById "root" |> ReactDOM.createRoot
+#if DEBUG
+open Elmish.Debug
+open Elmish.HMR
+#endif
 
-[ App.MyComponent() |> toReact ] |> React.strictMode |> root.render
+Program.mkProgram Ui.init Ui.update Ui.view
+#if DEBUG
+|> Program.withConsoleTrace
+#endif
+|> Program.withReactSynchronous "root"
+#if DEBUG
+|> Program.withDebugger
+#endif
+|> Program.run

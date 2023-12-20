@@ -10,6 +10,9 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Fable.Core" Version="4.2.0" />
+        <PackageReference Include="Fable.Elmish.Debugger" Version="4.0.0" />
+        <PackageReference Include="Fable.Elmish.HMR" Version="7.0.0" />
+        <PackageReference Include="Fable.Elmish.React" Version="4.0.0" />
         <PackageReference Include="Fable.Remoting.Client" Version="7.29.0" />
         <PackageReference Include="Fable.SimpleHttp" Version="3.6.0" />
         <PackageReference Include="Feliz" Version="2.7.0" />

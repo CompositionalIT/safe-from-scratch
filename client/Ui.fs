@@ -1,28 +1,42 @@
-module App
+module Ui
 
 open Browser.Dom
 open Feliz
 open Fable.Core
 open Fable.Remoting.Client
+open Elmish
+open Feliz.JSX.React
 
-let private loadData () =
-    let api =
-        Remoting.createApi ()
-        |> Remoting.withRouteBuilder Route.builder
-        |> Remoting.buildProxy<IApi>
+type Model = string option
 
-    async {
-        let! data = api.Greet()
-        console.log data
-        window.alert $"Data received: '{data}'"
-    }
-    |> Async.StartImmediate
+type Message =
+    | GetData
+    | GotData of string
+
+let api =
+    Remoting.createApi ()
+    |> Remoting.withRouteBuilder Route.builder
+    |> Remoting.buildProxy<IApi>
+
+let init () = None, Cmd.none
+
+let update msg model =
+    match msg with
+    | GetData -> None, Cmd.OfAsync.perform api.Greet () GotData
+    | GotData data -> Some data, Cmd.none
 
 [<JSX.Component>]
-let MyComponent () =
+let MyComponent model dispatch =
+    match model with
+    | Some model -> window.alert model
+    | None -> ()
+
     JSX.jsx
         $"""
-    <button id="btnFetch" onClick={fun _ -> loadData ()}>
+    <button onClick={fun _ -> dispatch GetData}>
         Fetch Data!
     </button>
 """
+    |> toReact
+
+let view model dispatch = MyComponent model dispatch
