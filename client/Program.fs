@@ -1,20 +1,7 @@
-﻿open Fable.SimpleHttp
-open Browser.Dom
-open Feliz
+﻿open Feliz
+open Browser
+open Feliz.JSX.React
 
-[<ReactComponent>]
-let MyComponent () =
-    Html.button [
-        prop.id "btnFetch"
-        prop.text "Fetch Data!"
-        prop.onClick (fun _ ->
-            (async {
-                let! code, data = Http.get "/api/data"
-                console.log (code, data)
-                window.alert $"Data received: Response code {code}, '{data}'"
-             }
-             |> Async.StartImmediate))
-    ]
+let private root = document.getElementById "root" |> ReactDOM.createRoot
 
-let root = ReactDOM.createRoot (document.getElementById "root")
-root.render (MyComponent())
+[ App.MyComponent() |> toReact ] |> React.strictMode |> root.render
