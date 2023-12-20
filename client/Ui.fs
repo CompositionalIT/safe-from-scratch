@@ -1,15 +1,20 @@
 module App
 
-open Fable.SimpleHttp
 open Browser.Dom
 open Feliz
 open Fable.Core
+open Fable.Remoting.Client
 
 let private loadData () =
+    let api =
+        Remoting.createApi ()
+        |> Remoting.withRouteBuilder Route.builder
+        |> Remoting.buildProxy<IApi>
+
     async {
-        let! code, data = Http.get "/api/data"
-        console.log (code, data)
-        window.alert $"Data received: Response code {code}, '{data}'"
+        let! data = api.Greet()
+        console.log data
+        window.alert $"Data received: '{data}'"
     }
     |> Async.StartImmediate
 

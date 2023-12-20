@@ -6,10 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="../shared/Contracts.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Fable.Remoting.Giraffe" Version="5.17.0" />
         <PackageReference Include="Giraffe" Version="6.2.0" />
     </ItemGroup>
 
